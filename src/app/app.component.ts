@@ -6,8 +6,10 @@ import { b64Decode, b64Encode, jwtDecode, jwtEncode } from './codec';
   selector: 'app-root',
   imports: [FormsModule],
   template: `
-    <h1>Local String Converter</h1>
-    <p class="hint">Tutto avviene nel browser: nessun dato lascia la pagina.</p>
+    <header>
+      <h1>Local String Converter</h1>
+      <p class="hint">Tutto avviene nel browser: nessun dato lascia la pagina.</p>
+    </header>
 
     <section>
       <h2>Base64</h2>
@@ -38,16 +40,35 @@ import { b64Decode, b64Encode, jwtDecode, jwtEncode } from './codec';
     </section>
   `,
   styles: `
-    :host { display: block; max-width: 760px; margin: 0 auto; padding: 16px; font-family: system-ui, sans-serif; }
-    section { border: 1px solid #8884; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; }
-    label { display: block; margin: 8px 0; font-weight: 600; }
-    label.inline { display: inline; font-weight: normal; }
-    textarea, input[type=text] { display: block; width: 100%; box-sizing: border-box; margin-top: 4px; font-family: ui-monospace, monospace; font-size: 14px; padding: 6px; }
-    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    button { padding: 6px 14px; cursor: pointer; }
-    .hint { opacity: .7; }
-    .error { color: #d33; }
-    .ok { color: #2a2; }
+    :host { display: block; max-width: 820px; margin: 0 auto; padding: 48px 16px 64px; }
+    header { margin-bottom: 32px; }
+    h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em;
+      background: linear-gradient(90deg, var(--text), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hint { color: var(--muted); margin: 8px 0 0; }
+    section { background: color-mix(in srgb, var(--surface) 85%, transparent); border: 1px solid var(--border); border-radius: 16px;
+      padding: 20px 24px; margin-bottom: 24px; backdrop-filter: blur(8px); box-shadow: 0 10px 30px #0006; }
+    h2 { margin: 0 0 12px; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+    h2::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+    label { display: block; margin: 14px 0; font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    label.inline { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 0 auto; text-transform: none; letter-spacing: 0; font-size: .9rem; cursor: pointer; }
+    input[type=checkbox] { accent-color: var(--accent); width: 16px; height: 16px; }
+    textarea, input[type=text] { display: block; width: 100%; margin-top: 6px; padding: 10px 12px; resize: vertical;
+      font: 14px/1.5 'JetBrains Mono', ui-monospace, monospace; color: var(--text); background: #0a0d0d;
+      border: 1px solid var(--border); border-radius: 10px; outline: none; transition: border-color .15s, box-shadow .15s; }
+    textarea:focus, input[type=text]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px #2dd4bf33; }
+    textarea[readonly] { color: var(--muted); }
+    .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    button { padding: 9px 18px; font: 600 .9rem Inter, system-ui, sans-serif; color: #04201c; cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong)); border: 0; border-radius: 10px;
+      transition: transform .1s, box-shadow .15s, filter .15s; }
+    button:hover { box-shadow: 0 6px 20px #2dd4bf40; filter: brightness(1.08); }
+    button:active { transform: translateY(1px); }
+    button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+    button + button { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+    button + button:hover { background: #2dd4bf14; }
+    .error, .ok { margin: 8px 0 0; padding: 8px 12px; border-radius: 8px; font-size: .9rem; }
+    .error { color: var(--error); background: #f871711a; }
+    .ok { color: var(--accent); background: #2dd4bf1a; }
   `,
 })
 export class AppComponent {
