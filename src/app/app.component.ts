@@ -8,45 +8,47 @@ import { b64Decode, b64Encode, jwtDecode, jwtEncode } from './codec';
   template: `
     <header>
       <h1>Local String Converter</h1>
-      <p class="hint">Tutto avviene nel browser: nessun dato lascia la pagina.</p>
     </header>
 
-    <section>
-      <h2>Base64</h2>
-      <label>Testo<textarea rows="4" [(ngModel)]="plain"></textarea></label>
-      <div class="row">
-        <button (click)="encodeB64()">Encode ↓</button>
-        <button (click)="decodeB64()">Decode ↑</button>
-        <label class="inline"><input type="checkbox" [(ngModel)]="urlSafe" /> URL-safe</label>
-      </div>
-      <label>Base64<textarea rows="4" [(ngModel)]="b64"></textarea></label>
-      @if (b64Error) { <p class="error">{{ b64Error }}</p> }
-    </section>
+    <div class="grid">
+      <section>
+        <h2>Base64</h2>
+        <label>Base64<textarea rows="4" [(ngModel)]="b64"></textarea></label>
+        <div class="row">
+          <button (click)="decodeB64()">Decode ↓</button>
+          <button (click)="encodeB64()">Encode ↑</button>
+          <label class="inline"><input type="checkbox" [(ngModel)]="urlSafe" /> URL-safe</label>
+        </div>
+        <label>Testo<textarea rows="4" [(ngModel)]="plain"></textarea></label>
+        @if (b64Error) { <p class="error">{{ b64Error }}</p> }
+      </section>
 
-    <section>
-      <h2>JWT (HS256)</h2>
-      <label>Secret<input type="text" [(ngModel)]="secret" placeholder="usato per firmare e verificare" /></label>
-      <label>Payload (JSON)<textarea rows="6" [(ngModel)]="payload"></textarea></label>
-      <div class="row">
-        <button (click)="encodeJwt()">Encode ↓</button>
-        <button (click)="decodeJwt()">Decode ↑</button>
-      </div>
-      <label>Token<textarea rows="4" [(ngModel)]="token"></textarea></label>
-      @if (header) { <label>Header<textarea rows="3" readonly [value]="header"></textarea></label> }
-      @if (valid !== null) {
-        <p [class]="valid ? 'ok' : 'error'">{{ valid ? '✔ Firma valida' : '✘ Firma NON valida' }}</p>
-      }
-      @if (jwtError) { <p class="error">{{ jwtError }}</p> }
-    </section>
+      <section>
+        <h2>JWT (HS256)</h2>
+        <label>Secret<input type="text" [(ngModel)]="secret" placeholder="usato per firmare e verificare" /></label>
+        <label>Token<textarea rows="4" [(ngModel)]="token"></textarea></label>
+        <div class="row">
+          <button (click)="decodeJwt()">Decode ↓</button>
+          <button (click)="encodeJwt()">Encode ↑</button>
+        </div>
+        @if (valid !== null) {
+          <p [class]="valid ? 'ok' : 'error'">{{ valid ? '✔ Firma valida' : '✘ Firma NON valida' }}</p>
+        }
+        @if (jwtError) { <p class="error">{{ jwtError }}</p> }
+        @if (header) { <label>Header<textarea rows="3" readonly [value]="header"></textarea></label> }
+        <label>Payload (JSON)<textarea rows="6" [(ngModel)]="payload"></textarea></label>
+      </section>
+    </div>
   `,
   styles: `
-    :host { display: block; max-width: 820px; margin: 0 auto; padding: 48px 16px 64px; }
+    :host { display: block; max-width: 1200px; margin: 0 auto; padding: 48px 16px 64px; }
     header { margin-bottom: 32px; }
     h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em;
       background: linear-gradient(90deg, var(--text), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .hint { color: var(--muted); margin: 8px 0 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 24px; align-items: start; }
     section { background: color-mix(in srgb, var(--surface) 85%, transparent); border: 1px solid var(--border); border-radius: 16px;
-      padding: 20px 24px; margin-bottom: 24px; backdrop-filter: blur(8px); box-shadow: 0 10px 30px #0006; }
+      padding: 20px 24px; backdrop-filter: blur(8px); box-shadow: 0 10px 30px #0006; }
     h2 { margin: 0 0 12px; font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
     h2::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
     label { display: block; margin: 14px 0; font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
