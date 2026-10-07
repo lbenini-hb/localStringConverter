@@ -8,7 +8,6 @@ import { RouterLink } from '@angular/router';
     <canvas #canvas aria-hidden="true"></canvas>
     <main>
       <h1>Local String Converter</h1>
-      <p class="hint">Tutto avviene nel browser: nessun dato lascia la pagina.</p>
       <nav>
         <a class="btn" routerLink="/base64">Base64</a>
         <a class="btn" routerLink="/jwt">JWT</a>
